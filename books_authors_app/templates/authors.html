@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add an Author</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        
+        <div class="row align-items-start">
+            <div class="col">
+                <h1>Add an Author</h1>
+                <form action="/add_author" method="POST">
+                    {% csrf_token %}
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="first_name">First Name:</label>
+                            <div class="col-9">
+                                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="last_name">Last Name:</label>
+                            <div class="col-9">
+                                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="notes">Notes:</label>
+                            <div class="col-9">
+                                <textarea type="text" name="notes" id="notes" class="form-control" placeholder="Notes"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            
+            <div class="col text-center">
+                <h1>Authors</h1>
+                <div class="row text-center">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for author in all_authors %}
+                                    <tr>
+                                        <th scope="row">{{author.id}}</th>
+                                        <td>{{author.first_name}} {{author.last_name}}</td>
+                                        <td><a href="/authors_detail/{{author.id}}">View</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <a class="btn btn-primary float-right" href="/" role="button">Add a Book</a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

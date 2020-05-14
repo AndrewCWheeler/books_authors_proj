@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-left">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <h2>{{first_name}} {{last_name}}</h2>
+                <h5>ID: {{id}}</h5>
+                <div class="row">
+                    <div class="col-3">
+                        <h5>Notes:</h5>
+                    </div>
+                    <div class="col-9">
+                        <p>{{notes}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row justify-content-left">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <h5>Books:</h5>
+                    <ul>
+                        {% for book in books %}
+                            <li>{{book.title}}</li>
+                        {% endfor %}
+                            <li>
+                                <form action="/append_book" method="POST">
+                                {% csrf_token %}
+                                    <select name="book_id">
+                                        {% for book in all_the_books %}
+                                            <option value="{{book.id}}">{{book.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="author_id" value="{{id}}">
+                                    <button class="btn btn-primary">Add</button>
+                                </form>
+                            </li>
+                    </ul>
+                    <a class="btn btn-primary" href="/authors" role="button">Authors</a>
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+</body>
+</html>

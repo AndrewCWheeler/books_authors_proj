@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Book</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        
+        <div class="row align-items-start">
+            <div class="col">
+                <h1>Add a Book</h1>
+                <form action="/add_book" method="POST">
+                    {% csrf_token %}
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="title">Title:</label>
+                            <div class="col-9">
+                                <input type="text" name="title" id="title" class="form-control" placeholder="Title">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" for="desc">Description:</label>
+                            <div class="col-9">
+                                <textarea type="text" name="desc" id="desc" class="form-control" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-3"></div>
+                            <div class="col-9">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+            
+            <div class="col text-center">
+                <h1>Books</h1>
+                <div class="row text-center">
+                    <div class="col">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for book in all_books %}
+                                    <tr>
+                                        <th scope="row">{{book.id}}</th>
+                                        <td>{{book.title}}</td>
+                                        <td><a href="/books/{{book.id}}">View</a></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-start">
+            <div class="col">
+                <a class="btn btn-primary float-right" href="/authors" role="button">Add an Author</a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
